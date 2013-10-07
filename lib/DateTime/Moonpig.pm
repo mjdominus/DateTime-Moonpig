@@ -69,7 +69,7 @@ for my $mutator (qw(
   (my $method = $mutator) =~ s/^_/set_/;
   Sub::Install::install_sub({
     code => sub { confess "Do not mutate DateTime objects! (http://rjbs.manxome.org/rubric/entry/1929)" },
-    as   => $mutator,
+    as   => $method,
   });
 }
 
