@@ -60,8 +60,8 @@ my $birthday = DateTime::Moonpig->new(
   time_zone => "UTC",
 );
 
-my $iso = '1978-07-20 05:00:32';
+my $st = '1978-07-20 05:00:32';
 
-is($birthday->iso, $iso, '->iso formatter works');
+is($birthday->st, $st, '->st formatter works');
 
 done_testing;

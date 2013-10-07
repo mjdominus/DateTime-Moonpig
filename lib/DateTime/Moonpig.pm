@@ -111,7 +111,7 @@ sub follows {
   return $self->compare($d) > 0;
 }
 
-sub iso {
+sub st {
   my ($self) = @_;
   join q{ }, $self->ymd('-'), $self->hms(':');
 }
