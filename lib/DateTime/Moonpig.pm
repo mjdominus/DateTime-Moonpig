@@ -45,6 +45,8 @@ sub minus {
       unless $b->can("epoch");
     my $res = ( $a->epoch - $b->epoch ) * ($rev ? -1 : 1);
     return $a->interval_factory($res);
+  } elsif (ref $b) {
+    croak "Can't subtract unblessed " . reftype($b) . " reference from $a";
   } else { # $b is a number
     croak "subtracting a date from a number is forbidden"
       if $rev;
