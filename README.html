@@ -1,0 +1,62 @@
+
+<p>
+</p>
+<h1><a name="name___datetime__moonpig">NAME - <code>DateTime::Moonpig</code></a></h1>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        $birthday = DateTime::Moonpig-&gt;new( year   =&gt; 1969,
+                                            month  =&gt;    4,
+                                            day    =&gt;    2,
+                                            hour   =&gt;    2,
+                                            minute =&gt;   38,
+                                          );
+       $now = DateTime::Moonpig-&gt;new( time() );</pre>
+<pre>
+       if ($now-&gt;follows($birthday)) { ... }    # true
+       if ($birthday-&gt;precedes($now)) { ... }   # also true</pre>
+<pre>
+       printf &quot;%d\n&quot;, $now - $birthday;  # returns number of seconds difference</pre>
+<pre>
+       $later   = $now + 60;     # one minute later
+       $earlier = $now - 2*60;   # two minutes earlier</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>This is a thin wrapper around the <code>DateTime</code> module to fix problems
+with that module's design.  The main points are:</p>
+<ul>
+<li>
+<p>Methods for mutating <code>DateTime::Moonpig</code> objects in place have been
+overridden to throw a fatal exception.  These include <code>add_duration</code>
+and <code>subtract_duration</code>, all <code>set_</code>* methods such as <code>set_hour</code> and
+<code>set_time_zone</code>, and <code>truncate</code>.</p>
+</li>
+<li>
+<p>The addition and subtraction operators have been overridden.</p>
+<p>Adding a <code>DateTime::Moonpig</code> to an integer <em>n</em> returns a new
+<code>DateTime::Moonpig</code> equal to a time <em>n</em> seconds later than the
+original.  Similarly, subtracting <em>n</em> returns a new DTM equal to a
+time <em>n</em> seconds earlier than the original.</p>
+<p>Subtracting two DTMs returns the number of seconds elapsed between
+them.  It does not return an object of any kind.</p>
+</li>
+<li>
+<p>The <code>new</code> method can be called with a single argument, which is
+interpreted as a Unix epoch time, such as is returned by Perl's
+built-in <code>time()</code> function.</p>
+</li>
+<li>
+<p>A few convenient methods have been added</p>
+</li>
+</ul>
+<h1><a name="author">AUTHOR</a></h1>
+<p>Mark Jason DOMINUS, <code>mjd@cpan.org</code></p>
+<p>Ricardo SIGNES, <code>rjbs@cpan.org</code></p>
+
+</body>
+
+</html>
