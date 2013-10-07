@@ -41,6 +41,9 @@ sub minus {
   # if $b is a datetime, the result is an interval
   # but if $b is an interval, the result is another datetime
   if (blessed($b)) {
+    croak "subtracting a date from a scalar object is forbidden"
+      if $rev && $b->can("as_seconds");
+
     my $sec = $b->can("as_seconds") ? $b->as_seconds :
               $b->can("epoch")      ? $b->epoch :
                 croak "Can't subtract X from $a when X has neither 'as_seconds' nor 'epoch' method";

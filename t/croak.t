@@ -39,8 +39,11 @@ subtest "mutators" => sub {
   }
 };
 
+sub SC::as_seconds { 1 }
+
 subtest "arithmetic" => sub {
   my $dummy = bless {} => 'BLARF';
+  my $sc = bless {} => 'SC';
 
   like(exception { $dt + {} },
        qr/Can't add .* to unblessed HASH reference/,
@@ -62,12 +65,16 @@ subtest "arithmetic" => sub {
        qr/Can't subtract X from .* when X has neither/,
        "subtracting a bad object");
 
-
   like(exception { 17 - $dt },
        qr/subtracting a date from a number/,
        "subtraction wrong order");
 
-  is(exception { $dt - 17 }, undef, "subtraction right order");
+  like(exception { $sc - $dt },
+       qr/subtracting a date from a scalar object/,
+       "subtraction wrong order");
+
+  is(exception { $dt - 17 }, undef, "subtraction right order (number)");
+  is(exception { $dt - $sc }, undef, "subtraction right order (scalar)");
 };
 
 
