@@ -20,7 +20,10 @@ sub new {
 
   if (@arg == 1) { return $class->from_epoch( epoch => $arg[0] ) }
 
-  bless $class->SUPER::new(@arg) => $class;
+  my %arg = @arg;
+  $arg{time_zone} = 'UTC' unless exists $arg{time_zone};
+
+  bless $class->SUPER::new(%arg) => $class;
 }
 
 sub new_datetime {
