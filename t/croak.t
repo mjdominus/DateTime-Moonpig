@@ -59,7 +59,7 @@ subtest "arithmetic" => sub {
        "subtracting a nondate");
 
   like(exception { $dt - $dummy },
-       qr/Can't subtract X from .* when X has no 'epoch' method/,
+       qr/Can't subtract X from .* when X has neither/,
        "subtracting a bad object");
 
 

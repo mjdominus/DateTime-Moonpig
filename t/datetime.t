@@ -31,20 +31,6 @@ my $now_epoch = DateTime::Moonpig->new($^T);
 
 cmp_ok($now_pair, '==', $now_epoch, 'one-arg constructor for M::DateTime');
 
-my $x = bless {} => 'Bogus';
-
-like(
-  exception { $now_epoch + $x },
-  qr/no 'as_seconds' method/,
-  '$dt + $x; $x needs ->as_seconds',
-);
-
-like(
-  exception { $now_epoch - $x },
-  qr/no 'epoch' method/,
-  '$dt - $x; $x needs ->epoch',
-);
-
 my $today     = $now_epoch;
 my $yesterday = DateTime::Moonpig->new($^T - 86400);
 cmp_ok( ($today - 86400), '==', $yesterday, '$dt - $secs'),;

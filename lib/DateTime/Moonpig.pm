@@ -41,9 +41,10 @@ sub minus {
   # if $b is a datetime, the result is an interval
   # but if $b is an interval, the result is another datetime
   if (blessed($b)) {
-    croak "Can't subtract X from $a when X has no 'epoch' method"
-      unless $b->can("epoch");
-    my $res = ( $a->epoch - $b->epoch ) * ($rev ? -1 : 1);
+    my $sec = $b->can("as_seconds") ? $b->as_seconds :
+              $b->can("epoch")      ? $b->epoch :
+                croak "Can't subtract X from $a when X has neither 'as_seconds' nor 'epoch' method";
+    my $res = ( $a->epoch - $sec ) * ($rev ? -1 : 1);
     return $a->interval_factory($res);
   } elsif (ref $b) {
     croak "Can't subtract unblessed " . reftype($b) . " reference from $a";
