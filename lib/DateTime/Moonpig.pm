@@ -309,8 +309,8 @@ or subtract:
 
         # handy technique
         sub hours { $_[0} * 3600 }
-	$x7    = $birthday + hours(12)   # 1969-04-02 12:38:00
-	$x8    = $birthday - hours(12)   # 1969-04-01 12:38:00
+	$x7    = $birthday + hours(12);  # 1969-04-02 14:38:00
+	$x8    = $birthday - hours(12);  # 1969-04-01 14:38:00
 
 C<$birthday> is I<never> modified by any of this.
 
@@ -365,7 +365,7 @@ number of seconds difference between them:
 	  my ($class) = @_;
 	  bless [ "DUMMY" ] => $class;
         }
-        sub epoch { return 1234567890 } # Feb 13 18:31:30 2009
+        sub epoch { return 1234567890 } # Feb 13 23:31:30 2009 UTC
 
         package main;
 
@@ -374,17 +374,18 @@ number of seconds difference between them:
         $feb13_dt = DateTime->new( year   => 2009,
                                    month  =>    2,
                                    day    =>   13,
-                                   hour   =>   18,
+                                   hour   =>   23,
                                    minute =>   31,
                                    second =>   30,
+                                   time_zone => "UTC",
                                  );
 
-        $z2   = $birthday - $feb13;     # -1258214010
-        $z3   = $birthday - $feb13_dt;  # -1258214010
-        $z4   = $feb13 - $birthday;     # 1258214010
+        $z6   = $birthday - $feb13;     # -1258232010
+        $z7   = $birthday - $feb13_dt;  # -1258232010
+        $z8   = $feb13 - $birthday;     # 1258232010
 
-        # WATCH OUT - will NOT return 1258214010
-        $z5   = $feb13_dt - $birthday;  # returns a DateTime::Duration object
+        # WATCH OUT - will NOT return 1258232010
+        $z9   = $feb13_dt - $birthday;  # returns a DateTime::Duration object
 
 In this last example, C<DateTime>'s overloading is respected, rather than
 C<DateTime::Moonpig>'s, and we get back a C<DateTime::Duration> object that represents
@@ -416,8 +417,9 @@ savings on 2007-03-11, as most of the USA did, then:
                                             hour   =>    1,
                                             minute =>    0,
                                             second =>    0,
+                                            time_zone => "America/New_York",
                                           );
-	$next_day = $daylight->plus(24*86400);
+	$next_day = $a_day->plus(24*3600);
 
 At this point C<$next_day> is exactly 24E<middot>86400 seconds ahead
 of C<$a_day>, so it probably represents 2007-03-12 02:00:00, not
