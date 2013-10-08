@@ -118,7 +118,7 @@ sub st {
 
 =head1 NAME 
 
-C<DateTime::Moonpig> - Saner interface to C<DateTime>
+DateTime::Moonpig - Saner interface to C<DateTime>
 
 =head1 SYNOPSIS
 
@@ -238,7 +238,7 @@ The following C<DateTime> methods will throw an exception if called:
         set_formatter
 
 Rik has a sad story about why these are a bad idea:
-http://rjbs.manxome.org/rubric/entry/1929
+L<http://rjbs.manxome.org/rubric/entry/1929>
 (Summary: B<mutable state is the enemy>.)
 
 =head2 OVERLOADING
@@ -475,8 +475,7 @@ L<"OVERLOADING">, above.
 =head1 BUGS
 
 Please submit bug reports at
-https://github.com/mjdominus/DateTime-Moonpig/issues .
-
+L<https://github.com/mjdominus/DateTime-Moonpig/issues>.
 
 =head1 LICENSE
 
@@ -493,6 +492,12 @@ license.
 Mark Jason DOMINUS, C<mjd@cpan.org>
 
 Ricardo SIGNES, C<rjbs@cpan.org>
+
+=head2 WUT
+
+C<DateTime::Moonpig> was originally part of the I<Moonpig> project,
+where it was used successfully for several years before this CPAN
+release.  For more complete details, see L<http://perl.plover.com/yak/Moonpig/>.
 
 =cut
 
