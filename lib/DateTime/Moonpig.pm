@@ -130,19 +130,20 @@ C<DateTime::Moonpig> - Saner interface to C<DateTime>
                                           );
        $now = DateTime::Moonpig->new( time() );
 
-       if ($now->follows($birthday)) { ... }    # true
-       if ($birthday->precedes($now)) { ... }   # also true
-
        printf "%d\n", $now - $birthday;  # returns number of seconds difference
 
        $later   = $now + 60;     # one minute later
-       $earlier = $now - 2*60;   # two minutes earlier
+       $earlier = $now - 2*3600; # two hours earlier
+
+       if ($now->follows($birthday)) { ... }    # true
+       if ($birthday->precedes($now)) { ... }   # also true
 
 =head1 DESCRIPTION
 
-This is a thin wrapper around the C<DateTime> module to fix problems
-with that module's design.  The main points are:
-
+C<Moonpig::DateTime> is a thin wrapper around the C<DateTime> module
+to fix problems with that module's design and interface.  The main
+points are:
+h
 =over 4
 
 =item *
@@ -184,7 +185,7 @@ C<DateTime::Moonpig::new> is just like C<DateTime::new>, except:
 
 =over 4
 
-=item *
+=item * The call
 
         DateTime::Moonpig->new( $n )
 
@@ -243,28 +244,40 @@ http://rjbs.manxome.org/rubric/entry/1929
 =head2 OVERLOADING
 
 The overloading of all operators, except C<+> and C<->, is inherited
-from C<DateTime>.  The C<+> and C<-> operators behave as follows:
+from C<DateTime>.
+
+=head3 Summary
+
+The C<+> and C<-> operators behave as follows:
 
 =over 4
 
-=item You can add a
+=item *
+
+You can add a
 C<DateTime::Moonpig> to a scalar, which will be interpreted as a number of seconds to
 move forward in time. (Or backward, if negative.)
 
-=item You can similarly subtract a scalar from a C<DateTime::Moonpig>. Subtracting a
+=item *
+
+You can similarly subtract a scalar from a C<DateTime::Moonpig>. Subtracting a
 C<DateTime::Moonpig> from a scalar is a fatal error.
 
-=item You can subtract a C<DateTime::Moonpig> from another date object, such as another
+=item *
+
+You can subtract a C<DateTime::Moonpig> from another date object, such as another
 C<DateTime::Moonpig>, or vice versa.  The result is the number of seconds between the
 times represented by the two objects.
 
-=item An object will be treated like a scalar if it implements an
+=item *
+
+An object will be treated like a scalar if it implements an
 C<as_seconds> method; it will be treated like a date object if it
 implements an C<epoch> method.
 
 =back
 
-Full details follow:
+=head3 Full details
 
 You can add a number to a C<DateTime::Moonpig> object, or subtract a number from a C<DateTime::Moonpig>
 object; the number will be interpreted as a number of seconds to add
@@ -391,7 +404,7 @@ is actually returning the result of C<< $x0->interval_factory(10) >>.
 
 =head3 Absolute time, not calendar time
 
-MPD C<+> and C<-> always do real-time calculations, never civil
+C<DateTime::Moonpig> C<plus> and C<minus> always do real-time calculations, never civil
 calendar calculations.  If your locality began observing daylight
 savings on 2007-03-11, as most of the USA did, then:
 
@@ -467,7 +480,7 @@ https://github.com/mjdominus/DateTime-Moonpig/issues .
 
 =head1 LICENSE
 
-Copyright 2010 IC Group, Inc.
+Copyright E<copy> 2010 IC Group, Inc.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
