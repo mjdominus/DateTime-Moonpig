@@ -156,10 +156,10 @@ The addition and subtraction operators have been overridden.
 
 Adding a C<DateTime::Moonpig> to an integer I<n> returns a new
 C<DateTime::Moonpig> equal to a time I<n> seconds later than the
-original.  Similarly, subtracting I<n> returns a new DTM equal to a
+original.  Similarly, subtracting I<n> returns a new C<DateTime::Moonpig> equal to a
 time I<n> seconds earlier than the original.
 
-Subtracting two DTMs returns the number of seconds elapsed between
+Subtracting two C<DateTime::Moonpig>s returns the number of seconds elapsed between
 them.  It does not return an object of any kind.
 
 =item *
@@ -203,8 +203,8 @@ if you think that's what you really want.
 
 =item *
 
-C<new> can be called on a DTM object, which is then ignored. So for
-example if C<$dtm> is a DTM object, then these two calls are
+C<new> can be called on a C<DateTime::Moonpig> object, which is then ignored. So for
+example if C<$dtm> is a C<DateTime::Moonpig> object, then these two calls are
 equivalent if the arguments are equivalent:
 
         $dtm->new( ... );
@@ -241,19 +241,19 @@ http://rjbs.manxome.org/rubric/entry/1929
 =head2 OVERLOADING
 
 The overloading of all operators, except C<+> and C<->, is inherited
-from DT.  The C<+> and C<-> operators behave as follows:
+from C<DateTime>.  The C<+> and C<-> operators behave as follows:
 
 =over 4
 
 =item You can add a
-DTM to a scalar, which will be interpreted as a number of seconds to
+C<DateTime::Moonpig> to a scalar, which will be interpreted as a number of seconds to
 move forward in time. (Or backward, if negative.)
 
-=item You can similarly subtract a scalar from a DTM. Subtracting a
-DTM from a scalar is a fatal error.
+=item You can similarly subtract a scalar from a C<DateTime::Moonpig>. Subtracting a
+C<DateTime::Moonpig> from a scalar is a fatal error.
 
-=item You can subtract a DTM from another date object, such as another
-DTM, or vice versa.  The result is the number of seconds between the
+=item You can subtract a C<DateTime::Moonpig> from another date object, such as another
+C<DateTime::Moonpig>, or vice versa.  The result is the number of seconds between the
 times represented by the two objects.
 
 =item An object will be treated like a scalar if it implements an
@@ -264,7 +264,7 @@ implements an C<epoch> method.
 
 Full details follow:
 
-You can add a number to a DTM object, or subtract a number from a DTM
+You can add a number to a C<DateTime::Moonpig> object, or subtract a number from a C<DateTime::Moonpig>
 object; the number will be interpreted as a number of seconds to add
 or subtract:
 
@@ -298,8 +298,8 @@ or subtract:
 
 C<$birthday> is I<never> modified by any of this.
 
-You can add any object to a DTM object if the other object supports an
-C<as_seconds> method.  DT and DTM objects do I<not> provide this method.
+You can add any object to a C<DateTime::Moonpig> object if the other object supports an
+C<as_seconds> method.  C<DateTime> and C<DateTime::Moonpig> objects do I<not> provide this method.
 
         package MyDaysInterval;
 	sub new {
@@ -321,9 +321,9 @@ C<as_seconds> method.  DT and DTM objects do I<not> provide this method.
 
 Again, C<$birthday> is not modified by any of this arithmetic.
 
-You can subtract any object I<from> a DTM object if that object
+You can subtract any object I<from> a C<DateTime::Moonpig> object if that object
 provides an C<as_seconds> method; it will be interpreted as a time
-interval, and the result will be a new DTM object:
+interval, and the result will be a new C<DateTime::Moonpig> object:
 
         $z2   = $birthday - $three_days;     # 1969-03-30 02:38:00
 
@@ -332,7 +332,7 @@ interval, and the result will be a new DTM object:
 
 If you have another object that represent a time, and that implements
 an C<epoch> method that returns its value as secondes since the epch,
-you may subtract it from a DTM object or vice-versa. The result is the
+you may subtract it from a C<DateTime::Moonpig> object or vice-versa. The result is the
 number of seconds between the second and the first argument.
 
 	$x0    = $birthday + 10;         #   1969-04-02 02:38:10
@@ -340,7 +340,7 @@ number of seconds between the second and the first argument.
         $z0   = $x0 - $birthday;         # 10
         $z1   = $birthday - $x0;         # -10
 
-You can similarly subtract a DTM object from any object that provides
+You can similarly subtract a C<DateTime::Moonpig> object from any object that provides
 an C<epoch> method:
 
         package Feb13;
@@ -369,8 +369,8 @@ an C<epoch> method:
         # WATCH OUT - will NOT return 1258214010
         $z5   = $dt - $birthday;        # returns a DateTime::Duration object
 
-In this last example, DT's overloading is respected, rather than
-DTM's, and you get back a C<DateTime::Duration> object that represents
+In this last example, C<DateTime>'s overloading is respected, rather than
+C<DateTime::Moonpig>'s, and you get back a C<DateTime::Duration> object that represents
 the elapsed difference of 40-some years.  Sorry, can't fix that.
 
 None of these subtractions will modify any of the argument objects.
@@ -409,8 +409,8 @@ and 03:09:00 on 2007-03-11 was 600 seconds.
 
 =head3 C<new_datetime>
 
-C<< DateTime::Moonpig->new_datetime( $dt ) >> takes a DT object and
-returns an equivalent DTM object.
+C<< DateTime::Moonpig->new_datetime( $dt ) >> takes a C<DateTime> object and
+returns an equivalent C<DateTime::Moonpig> object.
 
 =head3 C<plus>, C<minus>
 
