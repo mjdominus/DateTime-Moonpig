@@ -116,7 +116,9 @@ sub st {
   join q{ }, $self->ymd('-'), $self->hms(':');
 }
 
-=head1 NAME - C<DateTime::Moonpig>
+=head1 NAME 
+
+C<DateTime::Moonpig> - Saner interface to C<DateTime>
 
 =head1 SYNOPSIS
 
