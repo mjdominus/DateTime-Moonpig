@@ -143,7 +143,7 @@ DateTime::Moonpig - Saner interface to C<DateTime>
 C<Moonpig::DateTime> is a thin wrapper around the C<DateTime> module
 to fix problems with that module's design and interface.  The main
 points are:
-h
+
 =over 4
 
 =item *
@@ -343,7 +343,7 @@ interval, and the result will be a new C<DateTime::Moonpig> object:
         $z2   = $birthday - $three_days;     # 1969-03-30 02:38:00
 
 	# FORBIDDEN
-        $Z3   = $THREE_DAYS - $BIRTHDAY;     # CROAKS
+        $z3   = $three_days - $birthday;     # croaks
 
 If you have another object that represent a time, and that implements
 an C<epoch> method that returns its value as secondes since the epch,
@@ -440,9 +440,9 @@ page for fuller details.
 
 return true if time C<$a> is strictly earlier than time C<$b>, or
 strictly later than time C<$b>, respectively.  If C<$a> and C<$b>
-represent the same time, both method return false.  They will never
-both return true.  Internally they are implemented with calls to
-C<DateTime::compare>.
+represent the same time, both methods return false.  At most one is
+true for a given pair of dates. They are implemented as
+calls to C<DateTime::compare>.
 
 =head3 C<st>
 
