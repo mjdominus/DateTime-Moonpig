@@ -207,8 +207,8 @@ if you think that's what you really want.
 =item *
 
 C<new> can be called on a C<DateTime::Moonpig> object, which is then ignored. So for
-example if C<$dtm> is a C<DateTime::Moonpig> object, then these two calls are
-equivalent if the arguments are equivalent:
+example if C<$dtm> is any C<DateTime::Moonpig> object, then these two calls are
+equivalent:
 
         $dtm->new( ... );
         DateTime::Moonpig->new( ... );
@@ -292,7 +292,6 @@ or subtract:
                                             second =>    0,
                                           );
 
-
 	$x0    = $birthday + 10;         # 1969-04-02 02:38:10
 	$x1    = $birthday - 10;         # 1969-04-02 02:37:50
 	$x2    = $birthday + (-10);      # 1969-04-02 02:37:50
@@ -301,22 +300,22 @@ or subtract:
 	$x4    = $birthday - 100;        # 1969-04-02 02:36:20
 
         # identical to $birthday + 100
-	$x7    = 100 + $birthday;        # 1969-04-02 02:39:40
+	$x5    = 100 + $birthday;        # 1969-04-02 02:39:40
 
         # forbidden
-	$x8    = 100 - $birthday;        # croaks
+	$x6    = 100 - $birthday;        # croaks
 
         # handy technique
         sub hours { $_[0} * 3600 }
-	$x9    = $birthday + hours(12)   # 1969-04-02 12:38:00
-	$xa    = $birthday - hours(12)   # 1969-04-01 12:38:00
+	$x7    = $birthday + hours(12)   # 1969-04-02 12:38:00
+	$x8    = $birthday - hours(12)   # 1969-04-01 12:38:00
 
 C<$birthday> is I<never> modified by any of this.
 
 You can add any object to a C<DateTime::Moonpig> object if the other object supports an
 C<as_seconds> method.  C<DateTime> and C<DateTime::Moonpig> objects do I<not> provide this method.
 
-        package MyDaysInterval;
+        package MyDaysInterval;                 # Silly example
 	sub new {
 	  my ($class, $days) = @_;
 	  bless { days => $days } => $class;
@@ -336,29 +335,30 @@ C<as_seconds> method.  C<DateTime> and C<DateTime::Moonpig> objects do I<not> pr
 
 Again, C<$birthday> is not modified by any of this arithmetic.
 
-You can subtract any object I<from> a C<DateTime::Moonpig> object if that object
-provides an C<as_seconds> method; it will be interpreted as a time
-interval, and the result will be a new C<DateTime::Moonpig> object:
+You can subtract any object I<from> a C<DateTime::Moonpig> object, but
+not vice versa, if that object provides an C<as_seconds> method.  It
+will be interpreted as a time interval, and the result will be a new
+C<DateTime::Moonpig> object:
 
         $z2   = $birthday - $three_days;     # 1969-03-30 02:38:00
 
-	# FORBIDDEN
+	# forbidden
         $z3   = $three_days - $birthday;     # croaks
 
-If you have another object that represent a time, and that implements
-an C<epoch> method that returns its value as secondes since the epch,
-you may subtract it from a C<DateTime::Moonpig> object or vice-versa. The result is the
-number of seconds between the second and the first argument.
+If you have another object that represents a time, and that implements
+an C<epoch> method that returns its value as seconds since the Unix
+epoch, you may subtract it from a C<DateTime::Moonpig> object or vice
+versa. The result is the number of seconds between the second and the
+first operands.  Since C<DateTime::Moonpig> implements C<epoch>, you
+can subtract one C<DateTime::Moonpig> object from another to get the
+number of seconds difference between them:
 
-	$x0    = $birthday + 10;         #   1969-04-02 02:38:10
+	$x0   = $birthday + 10;         # 1969-04-02 02:38:10
 
-        $z0   = $x0 - $birthday;         # 10
-        $z1   = $birthday - $x0;         # -10
+        $z4   = $x0 - $birthday;         # 10
+        $z5   = $birthday - $x0;         # -10
 
-You can similarly subtract a C<DateTime::Moonpig> object from any object that provides
-an C<epoch> method:
-
-        package Feb13;
+        package Feb13;                  # Silly example
 	sub new {
 	  my ($class) = @_;
 	  bless [ "DUMMY" ] => $class;
@@ -369,23 +369,23 @@ an C<epoch> method:
 
         my $feb13 = Feb13->new();
 
-        $dt = DateTime->new( year   => 2009,
-                             month  =>    2,
-                             day    =>   13,
-                             hour   =>   18,
-                             minute =>   31,
-                             second =>   30,
-                           );
+        $feb13_dt = DateTime->new( year   => 2009,
+                                   month  =>    2,
+                                   day    =>   13,
+                                   hour   =>   18,
+                                   minute =>   31,
+                                   second =>   30,
+                                 );
 
-        $z2   = $feb13 - $birthday;   # 1258214010
-        $z3   = $birthday - $feb13;   # -1258214010
-        $z4   = $birthday - $dt;      # -1258214010
+        $z2   = $birthday - $feb13;     # -1258214010
+        $z3   = $birthday - $feb13_dt;  # -1258214010
+        $z4   = $feb13 - $birthday;     # 1258214010
 
         # WATCH OUT - will NOT return 1258214010
-        $z5   = $dt - $birthday;        # returns a DateTime::Duration object
+        $z5   = $feb13_dt - $birthday;  # returns a DateTime::Duration object
 
 In this last example, C<DateTime>'s overloading is respected, rather than
-C<DateTime::Moonpig>'s, and you get back a C<DateTime::Duration> object that represents
+C<DateTime::Moonpig>'s, and we get back a C<DateTime::Duration> object that represents
 the elapsed difference of 40-some years.  Sorry, can't fix that.
 
 None of these subtractions will modify any of the argument objects.
@@ -395,12 +395,12 @@ None of these subtractions will modify any of the argument objects.
 When two time objects are subtracted, the result is normally a number.
 However, the numeric difference is first passed to the target object's
 C<interval_factory> method, which has the option to transform it and
-return an object instead.  The default C<interval_factory> returns its
-argument unchanged.  So for example,
+return an (or something else) instead.  The default
+C<interval_factory> returns its argument unchanged.  So for example,
 
         $z0   = $x0 - $birthday;       # 10
 
-is actually returning the result of C<< $x0->interval_factory(10) >>.
+is actually returning the result of C<< $x0->interval_factory(10) >>, which is 10.
 
 =head3 Absolute time, not calendar time
 
@@ -408,17 +408,20 @@ C<DateTime::Moonpig> C<plus> and C<minus> always do real-time calculations, neve
 calendar calculations.  If your locality began observing daylight
 savings on 2007-03-11, as most of the USA did, then:
 
-        $daylight = DateTime::Moonpig->new( year   => 2007,
+        $a_day    = DateTime::Moonpig->new( year   => 2007,
                                             month  =>    3,
                                             day    =>   11,
                                             hour   =>    1,
-                                            minute =>   59,
+                                            minute =>    0,
                                             second =>    0,
                                           );
-	$d1    = $daylight->plus(60*10)    # 2007-03-11 03:09:00 (not 02:09:00)
+	$next_day = $daylight->plus(24*86400);
 
-This is because the actual elapsed time difference between 01:59:00
-and 03:09:00 on 2007-03-11 was 600 seconds.
+At this point C<$next_day> is exactly 24E<middot>86400 seconds ahead
+of C<$a_day>, so it probably represents 2007-03-12 02:00:00, not
+2007-03-12 03:00:00, because the civil calendar skips an hour during
+the intervening time in most of the USA.  This should be what you
+expect; if not please correct your expectation.
 
 =head2 NEW METHODS
 
@@ -440,7 +443,7 @@ page for fuller details.
 
 return true if time C<$a> is strictly earlier than time C<$b>, or
 strictly later than time C<$b>, respectively.  If C<$a> and C<$b>
-represent the same time, both methods return false.  At most one is
+represent the same time, both methods will return false.  At most one will be
 true for a given pair of dates. They are implemented as
 calls to C<DateTime::compare>.
 
