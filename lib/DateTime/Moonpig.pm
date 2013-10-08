@@ -140,7 +140,7 @@ DateTime::Moonpig - Saner interface to C<DateTime>
 
 =head1 DESCRIPTION
 
-C<Moonpig::DateTime> is a thin wrapper around the C<DateTime> module
+C<Moonpig::DateTime> is a thin wrapper around the L<DateTime> module
 to fix problems with that module's design and interface.  The main
 points are:
 
@@ -430,7 +430,7 @@ returns an equivalent C<DateTime::Moonpig> object.
 =head3 C<plus>, C<minus>
 
 These methods implement the overloading for the C<+> and C<->
-operators as per L<"OVERLOADING"> above.  See the L<perloverload> man
+operators as per L<"OVERLOADING"> above.  See the L<overload> man
 page for fuller details.
 
 =head3 C<precedes>, C<follows>
