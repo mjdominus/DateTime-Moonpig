@@ -172,4 +172,14 @@ subtest "DST example" => sub {
 };
 
 
+subtest "number of days in month" => sub {
+  is (DateTime::Moonpig->new( year  => 1969,
+                              month =>    4,
+                              day   =>    2,
+                             )
+      ->number_of_days_in_month(),
+      30, "April 1969 -> 30");
+};
+
+
 done_testing;
