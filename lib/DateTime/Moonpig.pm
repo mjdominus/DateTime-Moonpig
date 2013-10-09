@@ -37,7 +37,7 @@ sub plus {
   my $class = ref($self);
   my $a_sec = $class->_to_sec($a);
   return $class->from_epoch( epoch     => $self->epoch + $a_sec,
-                             time_zone => $self->time_zone
+                             time_zone => $self->time_zone,
                            );
 }
 
@@ -77,7 +77,7 @@ for my $mutator (qw(
   truncate
   set
     _year _month _day _hour _minute _second _nanosecond
-    _time_zone _locale _formatter
+    _locale _formatter
 )) {
   (my $method = $mutator) =~ s/^_/set_/;
   Sub::Install::install_sub({
