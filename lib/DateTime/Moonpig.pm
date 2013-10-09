@@ -36,7 +36,9 @@ sub plus {
   my ($self, $a) = @_;
   my $class = ref($self);
   my $a_sec = $class->_to_sec($a);
-  return $class->from_epoch( epoch => $self->epoch + $a_sec );
+  return $class->from_epoch( epoch     => $self->epoch + $a_sec,
+                             time_zone => $self->time_zone
+                           );
 }
 
 sub minus {
