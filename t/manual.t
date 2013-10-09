@@ -157,6 +157,19 @@ subtest "overloading: minus date object" => sub {
   is(ref $z9, "DateTime::Duration", "z9 is a Datetime::Duration");
 };
 
+subtest "DST example" => sub {
+  no strict 'vars';
+        $a_day    = DateTime::Moonpig->new( year   => 2007,
+                                            month  =>    3,
+                                            day    =>   11,
+                                            hour   =>    1,
+                                            minute =>    0,
+                                            second =>    0,
+                                            time_zone => "America/New_York",
+                                          );
+	$next_day = $a_day->plus(24*3600);
+  is($next_day->hms(":"), "02:00:00", "dst");
+};
 
 
 done_testing;
