@@ -29,9 +29,7 @@ subtest "mutators" => sub {
                   set_minute
                   set_second
                   set_nanosecond
-                  set_time_zone
-                  set_locale
-                  set_formatter
+
                )) {
     like(exception { $dt->$no() },
          qr/^Do not mutate DateTime objects!/,

@@ -77,7 +77,6 @@ for my $mutator (qw(
   truncate
   set
     _year _month _day _hour _minute _second _nanosecond
-    _locale _formatter
 )) {
   (my $method = $mutator) =~ s/^_/set_/;
   Sub::Install::install_sub({
