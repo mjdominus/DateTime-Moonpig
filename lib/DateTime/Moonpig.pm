@@ -205,7 +205,7 @@ created in the C<UTC> time zone.  C<DateTime> creates objects in its
 
         DateTime::Moonpig->new( time_zone => "floating", ... );
 
-if you think that's what you really want.
+if you think that's what you really want; I advise against it.
 
 =item *
 
@@ -236,13 +236,17 @@ The following C<DateTime> methods will throw an exception if called:
         set_minute
         set_second
         set_nanosecond
-        set_time_zone
-        set_locale
-        set_formatter
 
 Rik has a sad story about why these are a bad idea:
 L<http://rjbs.manxome.org/rubric/entry/1929>
 (Summary: B<mutable state is the enemy>.)
+
+The following mutators don't actually mutate the time value, and are allowed:
+
+        set_time_zone
+        set_locale
+        set_formatter
+
 
 =head2 OVERLOADING
 
