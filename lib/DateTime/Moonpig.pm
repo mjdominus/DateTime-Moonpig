@@ -317,7 +317,7 @@ or subtract:
 	$x7    = $birthday + hours(12);  # 1969-04-02 14:38:00
 	$x8    = $birthday - hours(12);  # 1969-04-01 14:38:00
 
-C<$birthday> is I<never> modified by any of this.
+C<$birthday> is I<never> modified by any of this.  The resulting objects will be in the same time zone as the original object, in this case UTC.
 
 You can add any object to a C<DateTime::Moonpig> object if the other object supports an
 C<as_seconds> method.  C<DateTime> and C<DateTime::Moonpig> objects do I<not> provide this method.
