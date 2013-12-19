@@ -22,7 +22,6 @@ sub new {
 
   my %arg = @arg;
   $arg{time_zone} = 'UTC' unless exists $arg{time_zone};
-
   bless $class->SUPER::new(%arg) => $class;
 }
 
@@ -205,7 +204,10 @@ created in the C<UTC> time zone.  C<DateTime> creates objects in its
 
         DateTime::Moonpig->new( time_zone => "floating", ... );
 
-if you think that's what you really want; I advise against it.
+if you think that's what you really want. I advise against it because
+a C<DateTime> object without an attached time zone has no definite
+meaning.  It seems to refer to a particular time, but when pressed to
+say what time it refers to, you can't.
 
 =item *
 
@@ -394,7 +396,7 @@ number of seconds difference between them:
 
 In this last example, C<DateTime>'s overloading is respected, rather than
 C<DateTime::Moonpig>'s, and we get back a C<DateTime::Duration> object that represents
-the elapsed difference of 40-some years.  Sorry, can't fix that.
+the elapsed difference of 40-some years.  Sorry, can't fix that; it's determined by Perl, which has to decide which of the two conflicting definitions of C<-> to honor, and chooses the other one.
 
 None of these subtractions will modify any of the argument objects.
 
@@ -427,9 +429,9 @@ savings on 2007-03-11, as most of the USA did, then:
 	$next_day = $a_day->plus(24*3600);
 
 At this point C<$next_day> is exactly 24E<middot>86400 seconds ahead
-of C<$a_day>, so it probably represents 2007-03-12 02:00:00, not
-2007-03-12 03:00:00, because the civil calendar skips an hour during
-the intervening time in most of the USA.  This should be what you
+of C<$a_day>. Because the civil calendar day for 2007-03-11 in New
+York was only 23 hours long, C<$next_day> represents represents
+2007-03-12 02:00:00, not 2007-03-12 03:00:00. This should be what you
 expect; if not please correct your expectation.
 
 =head2 NEW METHODS
@@ -462,8 +464,10 @@ Return a string representing the target time in the format
 
 	1969-04-02 02:38:00
 
-This is convenient, but does not comply with ISO 8601, The name C<st>
-is short for "string".
+This is convenient and readable, but does not comply with ISO 8601.
+It also omits the time zone, so beware.
+
+The name C<st> is short for "string".
 
 =head3 C<number_of_days_in_month>
 
@@ -476,7 +480,7 @@ month it represents.  For example:
                               )
             ->number_of_days_in_month()
 
-return 30.
+returns 30.
 
 =head3 C<interval_factory>
 
