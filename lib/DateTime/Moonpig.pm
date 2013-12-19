@@ -152,8 +152,8 @@ points are:
 
 Methods for mutating C<DateTime::Moonpig> objects in place have been
 overridden to throw a fatal exception.  These include C<add_duration>
-and C<subtract_duration>, all C<set_>* methods such as C<set_hour> and
-C<set_time_zone>, and C<truncate>.
+and C<subtract_duration>, C<set_>* methods such as C<set_hour>, and
+C<truncate>.
 
 =item *
 
@@ -249,6 +249,11 @@ The following mutators don't actually mutate the time value, and are allowed:
         set_locale
         set_formatter
 
+The behavior of C<set_time_zone> is complicated by the C<DateTime>
+module's handling of time zone changes.  It is possible to mutate a
+time by setting its time zone to "floating" and then setting it again.
+The normal behavior of C<DateTime>, to preserve the I<actual> time
+represented by the object, is bypassed if you do this.
 
 =head2 OVERLOADING
 
