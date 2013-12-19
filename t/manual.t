@@ -3,6 +3,9 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
+use lib 't/lib';
+use MyDaysInterval;
+
 use DateTime::Moonpig;
 
 # examples from the manual
@@ -67,16 +70,6 @@ subtest "overloading: plus and minus scalar" => sub {
 	$x8    = $birthday - hours(12);  # 1969-04-01 14:38:00
   is($x8->st, "1969-04-01 14:38:00", "x8");
 };
-
-package MyDaysInterval;                 # Silly example
-sub new {
-  my ($class, $days) = @_;
-  bless { days => $days } => $class;
-}
-
-sub as_seconds { $_[0]{days} * 86400 }
-
-package main;
 
 subtest "overloading: plus object" => sub {
         no strict 'vars';
