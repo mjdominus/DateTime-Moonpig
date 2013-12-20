@@ -8,14 +8,14 @@ perl:
   - "5.18"
 
 before_install:
-  - "cpanm -q Dist::Zilla"
-  - "dzil authordeps | cpanm -q"
-  - "dzil listdeps | cpanm -q"
+  - "perl5.18.1 cpanm -q Dist::Zilla"
+  - "perl 5.18.1 dzil authordeps | perl5.18.1 cpanm -q"
+  - "perl 5.18.1 dzil listdeps | perl5.18.1 cpanm -q"
 
 install:
-  - "dzil build"
+  - "perl5.18.1 dzil build"
 
-script: "dzil test"
+script: "make test"
 
 notifications:
   recipients:
