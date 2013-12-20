@@ -25,7 +25,7 @@ for my $test ({ name => "default zone",
                                     minute =>   38,
                                     @{$test->{zone_arg}},
                                    );
-    my $zone = $test->{zone_arg}[1] // "UTC";
+    my $zone = $test->{zone_arg}[1] || "UTC";
     if ($test->{name} eq "default zone") {
       is($t->time_zone->name, "UTC", "default time zone is UTC");
     }
