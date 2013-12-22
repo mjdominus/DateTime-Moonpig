@@ -4,8 +4,7 @@ with that module's design.  The main points are:
 
 - Methods for mutating `DateTime::Moonpig` objects in place have been
 overridden to throw a fatal exception.  These include `add_duration`
-and `subtract_duration`, all `set_`\* methods such as `set_hour` and
-`set_time_zone`, and `truncate`.
+and `subtract_duration`, `set_`\* methods such as `set_hour`, and `truncate`.
 - The addition and subtraction operators have been overridden.
 
     Adding a `DateTime::Moonpig` to an integer _n_ returns a new
@@ -25,6 +24,8 @@ built-in `time()` function.
 
 Please submit bug reports at
 https://github.com/mjdominus/DateTime-Moonpig/issues .
+
+Please *do not* submit bug reports at http://rt.cpan.org/ .
 
 # LICENSE
 
