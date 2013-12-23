@@ -410,7 +410,7 @@ None of these subtractions will modify any of the argument objects.
 When two time objects are subtracted, the result is normally a number.
 However, the numeric difference is first passed to the target object's
 C<interval_factory> method, which has the option to transform it and
-return an (or something else) instead.  The default
+return an object (or something else) instead.  The default
 C<interval_factory> returns its argument unchanged.  So for example,
 
         $z0   = $x0 - $birthday;       # 10
