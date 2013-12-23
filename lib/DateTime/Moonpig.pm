@@ -526,11 +526,18 @@ release.  For more complete details, see:
 
 =item *
 
-L<http://blog.plover.com/prog/Moonpig.html>
+L<http://blog.plover.com/prog/Moonpig.html> - Long blog article on the design and development of Moonpig generally.
 
 =item *
 
-L<http://perl.plover.com/yak/Moonpig/>
+L<http://perl.plover.com/yak/Moonpig/> - Slides and other materials
+from a one-hour talk about Moonpig.
+
+=item *
+
+L<http://www.perladvent.org/2013/2013-12-23.html> - Perl 2013 Advent
+Calendar article introducing this module and complaining about
+C<DateTime::Duration>.
 
 =back
 
