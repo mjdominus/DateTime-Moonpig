@@ -498,6 +498,8 @@ L<"OVERLOADING">, above.
 Please submit bug reports at
 L<https://github.com/mjdominus/DateTime-Moonpig/issues>.
 
+Please *do not* submit bug reports at C<http://rt.cpan.org/>.
+
 =head1 LICENSE
 
 Copyright E<copy> 2010 IC Group, Inc.
