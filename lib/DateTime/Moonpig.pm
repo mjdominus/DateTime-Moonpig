@@ -520,7 +520,19 @@ Ricardo SIGNES, C<rjbs@cpan.org>
 
 C<DateTime::Moonpig> was originally part of the I<Moonpig> project,
 where it was used successfully for several years before this CPAN
-release.  For more complete details, see L<http://perl.plover.com/yak/Moonpig/>.
+release.  For more complete details, see:
+
+=over 4
+
+=item *
+
+L<http://blog.plover.com/prog/Moonpig.html>
+
+=item *
+
+L<http://perl.plover.com/yak/Moonpig/>
+
+=back
 
 =cut
 
