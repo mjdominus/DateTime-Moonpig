@@ -433,10 +433,10 @@ savings on 2007-03-11, as most of the USA did, then:
                                           );
 	$next_day = $a_day->plus(24*3600);
 
-At this point C<$next_day> is exactly 24E<middot>86400 seconds ahead
+At this point C<$next_day> is exactly 24E<middot>3600 seconds ahead
 of C<$a_day>. Because the civil calendar day for 2007-03-11 in New
 York was only 23 hours long, C<$next_day> represents represents
-2007-03-12 02:00:00, not 2007-03-12 03:00:00. This should be what you
+2007-03-12 02:00:00 instead of 2007-03-12 01:00:00. This should be what you
 expect; if not please correct your expectation.
 
 =head2 NEW METHODS
