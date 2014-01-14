@@ -207,7 +207,9 @@ created in the C<UTC> time zone.  C<DateTime> creates objects in its
 if you think that's what you really want. I advise against it because
 a C<DateTime> object without an attached time zone has no definite
 meaning.  It seems to refer to a particular time, but when pressed to
-say what time it refers to, you can't.
+say what time it refers to, you can't. (See
+L<http://blog.plover.com/prog/perl/datetime-floating.html> for more
+discussion of why the "floating" time zone is best avoided.)
 
 =item *
 
